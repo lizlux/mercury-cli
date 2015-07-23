@@ -5,9 +5,5 @@ export default Ember.Route.extend({
 		let articleTitle = params.articleTitle;
 		let url = `api/v1/article/${articleTitle}`;
 		return Ember.$.getJSON(url);
-	},
-
-	afterModel(model) {
-
 	}
 });
