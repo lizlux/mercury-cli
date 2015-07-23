@@ -1,2 +1,39 @@
-{{log model}}
-{{{model.article.content}}}
+<h2 class='wiki-title'>
+	Muppet Wiki FixMe
+</h2>
+{{#if model.error}}
+	{{render 'not-found'}}
+{{else}}
+	<section class='article-body'>
+		<h1 class='article-title'>{{model.cleanTitle}}</h1>
+		{{#if model.sections.length}}
+			{{#collapsible-menu
+			showMenuIcon=true
+			additionalClasses='table-of-contents'
+			tLabel='app.article-toc-label'
+			ordered=true
+			observe=model.cleanTitle
+			trackingEvent='toc'
+			}}
+				{{#each model.sections as |section|}}
+					<li {{action 'trackClick' 'toc' 'header' on='mouseDown'}}>
+						<a href='#{{unbound section.id}}' title='{{unbound section.name}}'>
+							{{unbound section.name}}
+							{{svg 'chevron' viewBox='0 0 12 7' class='icon chevron'}}
+						</a>
+					</li>
+				{{/each}}
+			{{/collapsible-menu}}
+		{{/if}}
+		<article class="article-content mw-content">
+			{{#if model.article}}
+				{{article-content
+				article=model.article.content
+				media=model.article.media
+				}}
+			{{else}}
+				<p>Not found</p>
+			{{/if}}
+		</article>
+	</section>
+{{/if}}
