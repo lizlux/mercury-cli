@@ -1,0 +1,15 @@
+button,
+a.button {
+	font-weight: bold;
+	height: auto;
+	margin-bottom: 1rem;
+	-webkit-tap-highlight-color: Transparent;
+	width: 100%;
+}
+
+button[type='submit'][disabled] {
+	background-color: $button-color;
+	border-color: $button-color;
+	color: $disabled-button-text-color;
+	opacity: 0.5;
+}

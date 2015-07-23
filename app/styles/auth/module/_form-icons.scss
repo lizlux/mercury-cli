@@ -1,0 +1,30 @@
+.input-icon {
+	background-position: center 12px;
+	background-repeat: no-repeat;
+	background-size: 24px 24px;
+	box-sizing: content-box;
+	height: 1.25rem;
+	padding: 20px 5px 0 5px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 24px;
+}
+
+
+.dice {
+	background-image: url('/front/images/dice.svg');
+
+	&.on {
+		animation: spin 1s linear infinite;
+		-webkit-transform-origin: 15px 26px;
+	}
+}
+
+.password-toggler {
+	background-image: url('/front/images/eye-crossed.svg');
+
+	&.on {
+		background-image: url('/front/images/eye.svg');
+	}
+}

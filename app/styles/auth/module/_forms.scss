@@ -1,0 +1,76 @@
+form {
+	small.error {
+		color: $input-border-error-color;
+		line-height: .75rem;
+		margin-bottom: 0;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.input-container {
+	min-height: 62px; // Height of input + error message to avoid pushing content down when error is displayed
+	padding-bottom: .25rem;
+	position: relative;
+
+	input,
+	.input {
+		&.error {
+			border-bottom-color: $input-border-error-color;
+		}
+	}
+
+	small.error {
+		padding-bottom: 0;
+	}
+}
+
+.floating-label {
+	color: $color-blue-gray;
+	padding: 0;
+	pointer-events: none;
+	position: absolute;
+	top: 1.25rem;
+	transition: font-size ease-in 0.15s, top ease-in 0.15s;
+}
+
+.floating-label.active {
+	color: $label-color-active;
+	font-size: 0.75rem;
+	top: 0;
+}
+
+input[type='text']:valid  + .floating-label,
+input[type='password']:valid + .floating-label,
+input[type='email']:valid  + .floating-label,
+input[type='date']:valid + .floating-label {
+	color: $label-color-valid;
+}
+
+.input-container > img {
+	box-sizing: content-box;
+	height: 1rem;
+	padding: 24px 5px 0 5px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 20px;
+
+	&.on {
+		opacity: 0.5;
+	}
+}
+
+button[type="submit"].on {
+	&::before {
+		animation: spin 1s linear infinite;
+		background: url("/front/images/loading.svg") center no-repeat;
+		content: " ";
+		display: block;
+		height: 40px;
+	}
+
+	span {
+		display: none;
+	}
+}
