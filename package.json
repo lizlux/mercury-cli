@@ -1,7 +1,7 @@
 {
   "name": "mercury-cli",
   "version": "0.0.0",
-  "description": "Small description for mercury-cli goes here",
+  "description": "Mercury w/o technical debt",
   "private": true,
   "directories": {
     "doc": "doc",
