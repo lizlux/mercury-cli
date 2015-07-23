@@ -15,9 +15,9 @@ module('Acceptance | article', {
 });
 
 test('visiting /article', function(assert) {
-  visit('/article');
+  visit('/wiki/foo');
 
   andThen(function() {
-    assert.equal(currentURL(), '/article');
+    assert.equal(currentURL(), '/wiki/foo');
   });
 });
