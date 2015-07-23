@@ -4,13 +4,10 @@ export default Ember.Route.extend({
 	model(params) {
 		let articleTitle = params.articleTitle;
 		let url = `api/v1/article/${articleTitle}`;
-		debugger;
-		return Ember.$.getJSON({
-			url: 'http://www.google.com'
-		});
+		return Ember.$.getJSON(url);
 	},
 
-	afterModel() {
-		//debugger;
+	afterModel(model) {
+		console.log(model);
 	}
 });
