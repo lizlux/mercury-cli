@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import MediaComponent from './media-component';
 
 export default Ember.Component.extend({
+	ArticleContentListeners: Ember.inject.service('article-content-listeners'),
 	layoutName: 'components/article-content',
 	article: null,
 	articleContent: Em.computed('article', function () {
@@ -30,23 +32,27 @@ export default Ember.Component.extend({
 		}
 
 		for (index = 0; index < numberToProcess; index++) {
-			$mediaPlaceholders.eq(index).replaceWith(this.createMediaComponent($mediaPlaceholders[index], model));
+			let mediaElement = this.createMediaComponent($mediaPlaceholders[index], model);
+			$mediaPlaceholders.eq(index).replaceWith(mediaElement);
 		}
 	},
 
 	createMediaComponent: function (element, model ) {
 		var ref = parseInt(element.dataset.ref, 10),
-			media = model.find(ref);
-
-		var component = this.createChildView(App.MediaComponent.newFromMedia(media), {
-			ref: ref,
-			width: parseInt(element.getAttribute('width'), 10),
-			height: parseInt(element.getAttribute('height'), 10),
-			imgWidth: element.offsetWidth,
-			media: media
-		}).createElement();
-
-		return component.$().attr('data-ref', ref);
+			media = model[ref],
+			mediaComponent = this.container.lookup('component:media-component'),
+			mediaComponentObj = mediaComponent.newFromMedia(media, {
+					ref: ref,
+					width: parseInt(element.getAttribute('width'), 10),
+					height: parseInt(element.getAttribute('height'), 10),
+					imgWidth: element.offsetWidth,
+					media: media
+			});
+		if (mediaComponentObj) {
+			var component = this.createChildView(mediaComponentObj).createElement();
+			return component.$().attr('data-ref', ref);
+		}
+		return null;
 	},
 
 	/**

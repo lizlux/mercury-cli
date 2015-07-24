@@ -13,6 +13,7 @@
     "loader.js": "ember-cli/loader.js#3.2.0",
     "qunit": "~1.17.1",
     "wikia-style-guide": "Wikia/style-guide#1.0.1",
-    "foundation": "5.5.1"
+    "foundation": "5.5.1",
+    "vignette": "wikia/vignette-js#2.1.1"
   }
 }
