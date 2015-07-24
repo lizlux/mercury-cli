@@ -14,7 +14,7 @@ export default Ember.Component.extend(ArticleContentMixin, {
 	imageSrc: Em.computed.oneWay(
 		'emptyGif'
 	),
-	
+
 	hasCaption: Em.computed.notEmpty('media.caption'),
 
 	link: Em.computed.alias('media.link'),
