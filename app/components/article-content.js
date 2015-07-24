@@ -1,16 +1,17 @@
 import Ember from 'ember';
 import MediaComponent from './media-component';
+import PortableInfoboxComponent from './portable-infobox';
 
 export default Ember.Component.extend({
 	ArticleContentListeners: Ember.inject.service('article-content-listeners'),
 	layoutName: 'components/article-content',
 	article: null,
-	articleContent: Em.computed('article', function () {
+	articleContent: Ember.computed('article', function () {
 		return this.get('article');
 	}),
 
 	handleTables() {
-		var $tables = this.$().find('table:not([class*=infobox], .dirbox)'),
+		var $tables = Ember.$().find('table:not([class*=infobox], .dirbox)'),
 			wrapper;
 
 		if ($tables.length) {
@@ -24,7 +25,7 @@ export default Ember.Component.extend({
 	},
 
 	replaceMediaPlaceholdersWithMediaComponents: function (model, numberToProcess = -1) {
-		var $mediaPlaceholders = this.$('.article-media'),
+		var $mediaPlaceholders = Ember.$('.article-media'),
 			index;
 
 		if (numberToProcess < 0 || numberToProcess > $mediaPlaceholders.length) {
@@ -60,7 +61,7 @@ export default Ember.Component.extend({
 	 */
 	handleInfoboxes: function (){
 		var shortClass = 'short',
-			$infoboxes = $('table[class*="infobox"] tbody'),
+			$infoboxes = Ember.$('table[class*="infobox"] tbody'),
 			body = window.document.body,
 			scrollTo = body.scrollIntoViewIfNeeded || body.scrollIntoView;
 
@@ -72,8 +73,8 @@ export default Ember.Component.extend({
 				.addClass(shortClass)
 				.append('<tr class=infobox-expand><td colspan=2><svg viewBox="0 0 12 7" class="icon"><use xlink:href="#chevron"></use></svg></td></tr>')
 				.on('click', function (event) {
-					var $target = $(event.target),
-						$this = $(this);
+					var $target = Ember.$(event.target),
+						$this = Ember.$(this);
 
 					if (!$target.is('a') && $this.toggleClass(shortClass).hasClass(shortClass)) {
 						scrollTo.apply($this.find('.infobox-expand')[0]);
@@ -83,16 +84,16 @@ export default Ember.Component.extend({
 	},
 
 	replaceInfoboxesWithInfoboxComponents: function () {
-		this.$('.portable-infobox').map((i, elem) => {
+		Ember.$('.portable-infobox').map((i, elem) => {
 			this.replaceInfoboxWithInfoboxComponent(elem);
 		});
 	},
 
 	replaceInfoboxWithInfoboxComponent: function (elem) {
-		var $infoboxPlaceholder = $(elem),
+		var $infoboxPlaceholder = Ember.$(elem),
 			infoboxComponent;
 
-		infoboxComponent = this.createChildView(App.PortableInfoboxComponent.create({
+		infoboxComponent = this.createChildView(PortableInfoboxComponent.create({
 			infoboxHTML: elem.innerHTML,
 			height: $infoboxPlaceholder.outerHeight()
 		}));
@@ -104,16 +105,16 @@ export default Ember.Component.extend({
 	},
 
 	replaceMapsWithMapComponents: function () {
-		this.$('.wikia-interactive-map-thumbnail').map((i, elem) => {
+		Ember.$('.wikia-interactive-map-thumbnail').map((i, elem) => {
 			this.replaceMapWithMapComponent(elem);
 		});
 	},
 
 	replaceMapWithMapComponent: function (elem) {
-		var $mapPlaceholder = $(elem),
+		var $mapPlaceholder = Ember.$(elem),
 			$a = $mapPlaceholder.children('a'),
 			$img = $a.children('img'),
-			mapComponent = this.createChildView(App.WikiaMapComponent.create({
+			mapComponent = this.createChildView(WikiaMapComponent.create({
 			url: $a.data('map-url'),
 			imageSrc: $img.data('src'),
 			id: $a.data('map-id'),
@@ -132,7 +133,7 @@ export default Ember.Component.extend({
 	 * @see http://static.polldaddy.com/p/8791040.js
 	 */
 	handlePollDaddy: function () {
-		var $polls = this.$('script[src*=polldaddy]');
+		var $polls = Ember.$('script[src*=polldaddy]');
 
 		$polls.each((index, script) => {
 			// extract ID from script src
@@ -157,7 +158,7 @@ export default Ember.Component.extend({
 			}
 
 			// avoid PollDaddy's document.write on subsequent article loads
-			if (!this.$('#PDI_container' + id).length) {
+			if (!Ember.$('#PDI_container' + id).length) {
 				html = '<a name="pd_a_' + id + '" style="display: inline; padding: 0px; margin: 0px;"></a>' +
 				       '<div class="PDS_Poll" id="PDI_container' + id + '"></div>';
 				$(script).after(html);
