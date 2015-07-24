@@ -42,15 +42,15 @@ export default Ember.Component.extend({
 		var ref = parseInt(element.dataset.ref, 10),
 			media = model[ref],
 			mediaComponent = this.container.lookup('component:media-component'),
-			mediaComponentObj = mediaComponent.newFromMedia(media, {
-					ref: ref,
-					width: parseInt(element.getAttribute('width'), 10),
-					height: parseInt(element.getAttribute('height'), 10),
-					imgWidth: element.offsetWidth,
-					media: media
-			});
+			mediaComponentObj = mediaComponent.newFromMedia(media);
 		if (mediaComponentObj) {
-			var component = this.createChildView(mediaComponentObj).createElement();
+			var component = this.createChildView(mediaComponentObj, {
+				ref: ref,
+				width: parseInt(element.getAttribute('width'), 10),
+				height: parseInt(element.getAttribute('height'), 10),
+				imgWidth: element.offsetWidth,
+				media: media
+			}).createElement();
 			return component.$().attr('data-ref', ref);
 		}
 		return null;
