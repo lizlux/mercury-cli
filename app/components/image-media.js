@@ -11,15 +11,15 @@ export default Ember.Component.extend(ArticleContentMixin, {
 	classNameBindings: ['hasCaption', 'visible', 'isSmall'],
 	layoutName: 'components/image-media',
 
-	imageSrc: Em.computed.oneWay(
+	imageSrc: Ember.computed.oneWay(
 		'emptyGif'
 	),
 
-	hasCaption: Em.computed.notEmpty('media.caption'),
+	hasCaption: Ember.computed.notEmpty('media.caption'),
 
-	link: Em.computed.alias('media.link'),
+	link: Ember.computed.alias('media.link'),
 
-	isSmall: Em.computed('media.width', 'media.height', function () {
+	isSmall: Ember.computed('media.width', 'media.height', function () {
 		var imageWidth = this.get('media.width'),
 			imageHeight = this.get('media.height');
 
@@ -33,7 +33,7 @@ export default Ember.Component.extend(ArticleContentMixin, {
 	 * so we have less content jumping around due to lazy loading images
 	 * @return number
 	 */
-	computedHeight: Em.computed('media.width', 'media.height', 'articleContent.width', function () {
+	computedHeight: Ember.computed('media.width', 'media.height', 'articleContent.width', function () {
 		var pageWidth = this.get('articleContent.width'),
 			imageWidth = this.get('media.width') || pageWidth,
 			imageHeight = this.get('media.height');
@@ -50,7 +50,7 @@ export default Ember.Component.extend(ArticleContentMixin, {
 	 * In case of very high or very wide images, crop them properly.
 	 * @return ThumbnailerParams
 	 */
-	infoboxImageParams: Em.computed('media', 'imageAspectRatio', {
+	infoboxImageParams: Ember.computed('media', 'imageAspectRatio', {
 		get() {
 			var media = this.get('media'),
 				imageAspectRatio = this.get('imageAspectRatio'),
@@ -63,7 +63,7 @@ export default Ember.Component.extend(ArticleContentMixin, {
 					mode: this.thumbnailer.mode.topCropDown,
 					height: windowWidth,
 					width: windowWidth
-				}
+				};
 			}
 
 			//wide image- image wider than 16:9 aspect ratio. Crop it to have 16:9 ratio.
@@ -72,7 +72,7 @@ export default Ember.Component.extend(ArticleContentMixin, {
 					mode: this.thumbnailer.mode.zoomCrop,
 					height: Math.floor(windowWidth / imageAspectRatio),
 					width: windowWidth
-				}
+				};
 			}
 
 			//normal image- size between the 16:9 ratio and square.
@@ -81,7 +81,7 @@ export default Ember.Component.extend(ArticleContentMixin, {
 				mode: this.thumbnailer.mode.thumbnailDown,
 				height: Math.floor(windowWidth * (media.height / media.width)),
 				width: windowWidth
-			}
+			};
 		}
 	}),
 
@@ -90,7 +90,7 @@ export default Ember.Component.extend(ArticleContentMixin, {
 	 * If media is an icon, use the limited width.
 	 * If media is an infobox image, use specified thumb params.
 	 */
-	url: Em.computed({
+	url: Ember.computed({
 		get() {
 			var media = this.get('media'),
 				mode = this.thumbnailer.mode.thumbnailDown,
@@ -135,7 +135,7 @@ export default Ember.Component.extend(ArticleContentMixin, {
 	 * @desc style used on img tag to set height of it before we load an image
 	 * so when image loads, browser don't have to resize it
 	 */
-	style: Em.computed('computedHeight', 'visible', function () {
+	style: Ember.computed('computedHeight', 'visible', function () {
 		return (this.get('visible') ?
 	        '' :
 	        `height:${this.get('computedHeight')}px;`).htmlSafe();

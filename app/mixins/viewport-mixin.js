@@ -12,7 +12,7 @@ export default Ember.Mixin.create({
 		this._super();
 		if (!this.get('initiated')) {
 			this.onResize();
-			Em.$(window).on('resize', () => {
+			Ember.$(window).on('resize', () => {
 				this.onResize();
 			});
 			this.set('initiated', true);

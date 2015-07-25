@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import MediaComponent from './media-component';
 import PortableInfoboxComponent from './portable-infobox';
+import WikiaMapComponent from './wikia-map';
 
 export default Ember.Component.extend({
 	ArticleContentListeners: Ember.inject.service('article-content-listeners'),
@@ -145,7 +145,7 @@ export default Ember.Component.extend({
 
 			// something is wrong with poll daddy or UCG.
 			if (!matches || !matches[1]) {
-				Em.Logger.error('Polldaddy script src url not recognized', script.src);
+				Ember.Logger.error('Polldaddy script src url not recognized', script.src);
 				return;
 			}
 
@@ -153,7 +153,7 @@ export default Ember.Component.extend({
 			init = window['PDV_go' + id];
 
 			if (typeof init !== 'function') {
-				Em.Logger.error('Polldaddy code changed', script.src);
+				Ember.Logger.error('Polldaddy code changed', script.src);
 				return;
 			}
 
@@ -161,23 +161,23 @@ export default Ember.Component.extend({
 			if (!Ember.$('#PDI_container' + id).length) {
 				html = '<a name="pd_a_' + id + '" style="display: inline; padding: 0px; margin: 0px;"></a>' +
 				       '<div class="PDS_Poll" id="PDI_container' + id + '"></div>';
-				$(script).after(html);
+				Ember.$(script).after(html);
 			}
 			init();
 		});
 	},
 
-	articleContentObserver: Em.observer('articleContent', function () {
+	articleContentObserver: Ember.observer('articleContent', function () {
 		this.rerender();
 
-		Em.run.scheduleOnce('afterRender',this,  () => {
+		Ember.run.scheduleOnce('afterRender',this,  () => {
 			this.handleTables();
 			this.handleInfoboxes();
 			this.replaceInfoboxesWithInfoboxComponents();
 			this.replaceMapsWithMapComponents();
 			this.replaceMediaPlaceholdersWithMediaComponents(this.get('media'), 4);
 			this.handlePollDaddy();
-			Em.run.later(this, () => this.replaceMediaPlaceholdersWithMediaComponents(this.get('media')), 0);
+			Ember.run.later(this, () => this.replaceMediaPlaceholdersWithMediaComponents(this.get('media')), 0);
 		});
 
 	}).on('init')

@@ -10,7 +10,7 @@ export default Ember.Service.extend({
 	articleContentElement: null,
 
 	/**
-	 * This is a simple getter. It can't be a computed property because Em.Object.create doesn't support them.
+	 * This is a simple getter. It can't be a computed property because Ember.Object.create doesn't support them.
 	 *
 	 * @return {JQuery}
 	 */
@@ -31,7 +31,7 @@ export default Ember.Service.extend({
 		this.containers.push(container);
 
 		if (!this.initialized) {
-			Em.$(window).on('resize', () => {
+			Ember.$(window).on('resize', () => {
 				this.onResize();
 			});
 

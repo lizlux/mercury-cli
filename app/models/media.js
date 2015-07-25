@@ -1,4 +1,6 @@
+import Ember from 'ember';
 import DS from 'ember-data';
+import String from '../../utils/string';
 
 export default DS.Model.extend({
 	/**
@@ -25,18 +27,18 @@ export default DS.Model.extend({
 			mediaRef = null,
 			galleryRef = null,
 			findInMedia = function (mediaItem, mediaIndex) {
-			if (Em.isArray(mediaItem)) {
+			if (Ember.isArray(mediaItem)) {
 				return (mediaItem).some(findInGallery, {
 					mediaIndex: mediaIndex
 				});
-			} else if (M.String.normalizeToUnderscore((mediaItem).title) ===
-			M.String.normalizeToUnderscore(title)) {
+			} else if (String.normalizeToUnderscore((mediaItem).title) ===
+			String.normalizeToUnderscore(title)) {
 				mediaRef = mediaIndex;
 				return true;
 			}
 		},
 		findInGallery = function (galleryItem, galleryIndex) {
-			if (M.String.normalizeToUnderscore(galleryItem.title) === M.String.normalizeToUnderscore(title)) {
+			if (String.normalizeToUnderscore(galleryItem.title) === String.normalizeToUnderscore(title)) {
 				mediaRef = this.mediaIndex;
 				galleryRef = galleryIndex;
 				return true;
@@ -44,10 +46,10 @@ export default DS.Model.extend({
 			return false;
 		};
 
-		if (Em.isArray(media)) {
+		if (Ember.isArray(media)) {
 			media.some(findInMedia);
 		} else {
-			Em.Logger.debug('Media is not an array', media);
+			Ember.Logger.debug('Media is not an array', media);
 		}
 
 		return {

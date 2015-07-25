@@ -1,5 +1,7 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 import MediaModel from './media';
+import ArticleModel from './article';
 /// <reference path="../../baseline/mercury" />
 /// <reference path="../app.ts" />
 /// <reference path="../../mercury/utils/string.ts" />
@@ -31,14 +33,14 @@ export default DS.Model.extend({
 			redirect += '?redirect=' + encodeURIComponent(params.redirect);
 		}
 
-		return App.get('apiBase') + '/article/' + params.title + redirect;
+		return /*App.get('apiBase')*/'/api/v1' + '/article/' + params.title + redirect;
 	},
 
 	find: function (params) {
-		var model = App.ArticleModel.create(params);
+		var model = ArticleModel.create(params);
 
-		return new Em.RSVP.Promise((resolve, reject) => {
-			Em.$.ajax({
+		return new Ember.RSVP.Promise((resolve, reject) => {
+			Ember.$.ajax({
 				url: this.url(params),
 				dataType: 'json',
 				success: (data) => {
@@ -53,7 +55,7 @@ export default DS.Model.extend({
 						resolve(model);
 					} else {
 						// TODO we currently abort transition when there was an error other than 404
-						reject($.extend(err, model));
+						reject(Ember.$.extend(err, model));
 					}
 				}
 			});
@@ -61,9 +63,9 @@ export default DS.Model.extend({
 	},
 
 	getArticleRandomTitle: function () {
-		return new Em.RSVP.Promise((resolve, reject) => {
-			Em.$.ajax({
-				url: App.get('apiBase') + '/article?random&titleOnly',
+		return new Ember.RSVP.Promise((resolve, reject) => {
+			Ember.$.ajax({
+				url: 'foo', //App.get('apiBase') + '/article?random&titleOnly',
 				cache: false,
 				dataType: 'json',
 				success: (data) => {
@@ -105,7 +107,7 @@ export default DS.Model.extend({
 
 			data = {
 				article: error.details,
-				cleanTitle: M.String.normalizeToWhitespace(model.title),
+				cleanTitle: model.title, //M.String.normalizeToWhitespace(model.title),
 				error: error
 			};
 		} else if (source) {
@@ -115,7 +117,7 @@ export default DS.Model.extend({
 			if (source.details) {
 				var details = source.details;
 
-				data = $.extend(data, {
+				data = Ember.$.extend(data, {
 					ns: details.ns,
 					cleanTitle: details.title,
 					comments: details.comments,
@@ -133,7 +135,7 @@ export default DS.Model.extend({
 			if (source.article) {
 				var article = source.article;
 
-				data = $.extend(data, {
+				data = Ember.$.extend(data, {
 					article: article.content || source.content,
 					mediaUsers: article.users,
 					type: article.type,

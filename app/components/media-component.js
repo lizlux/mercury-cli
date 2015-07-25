@@ -25,11 +25,11 @@ export default Ember.Component.extend(/*VisibleMixin, ViewportMixin,*/ {
 	},
 
 	//if media inside infobox, don't display caption
-	noCaption: Em.computed.equal('media.context', 'infobox'),
+	noCaption: Ember.computed.equal('media.context', 'infobox'),
 
 	//icon width depends on it's real dimensions
 	iconHeight: 20,
-	iconWidth: Em.computed('media', 'iconHeight', function() {
+	iconWidth: Ember.computed('media', 'iconHeight', function() {
 		var media = this.get('media'),
 			iconHeight = this.get('iconHeight');
 
@@ -63,7 +63,7 @@ export default Ember.Component.extend(/*VisibleMixin, ViewportMixin,*/ {
 	/**
 	 * @desc caption for current media
 	 */
-	caption: Em.computed('media', {
+	caption: Ember.computed('media', {
 		get() {
 			var media = this.get('media'),
 				noCaption = this.get('noCaption');
@@ -91,7 +91,7 @@ export default Ember.Component.extend(/*VisibleMixin, ViewportMixin,*/ {
 	},
 
 	newFromMedia: function (media) {
-		if (Em.isArray(media)) {
+		if (Ember.isArray(media)) {
 			//if ((media).some((media) => !!media.link)) {
 			//	return App.LinkedGalleryMediaComponent.create();
 			//} else {

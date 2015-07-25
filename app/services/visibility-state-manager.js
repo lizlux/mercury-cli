@@ -50,7 +50,7 @@ export default Ember.Service.extend({
 	},
 
 	checkDebounced: function () {
-		Em.run.debounce(this, this.check, 50);
+		Ember.run.debounce(this, this.check, 50);
 	},
 
 	/**
